@@ -12,12 +12,31 @@ import AlamofireImage
 class NowPlayingViewController: UIViewController,UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    let alertController = UIAlertController(title: "Network Error", message: "It's Seems there is a network error", preferredStyle: .alert)
     var movies: [[String: Any]] = []
+    var refreshControl: UIRefreshControl!
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
-        // Do any additional setup after loading the view.
-        //https://api.themoviedb.org/3/movie/550?api_key=f09a904547a3537c895babf5612886fa
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(NowPlayingViewController.didPullToRefresh(_:)), for: .valueChanged)
+        tableView.insertSubview(refreshControl, at: 0)
+        fetchMovies()
+    }
+    
+        func networkErrorAlert(){
+            let alertController = UIAlertController(title: "Network Error", message: "It's Seems there is a network error. Please try again later.", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.default, handler: { (action) in self.fetchMovies()}))
+            self.present(alertController, animated: true)
+        }
+    
+    @objc func didPullToRefresh(_ refreshControl: UIRefreshControl) {
+        fetchMovies()
+    }
+
+    func fetchMovies() {
+        activityIndicator.startAnimating()
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=f09a904547a3537c895babf5612886fa")!
         
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
@@ -28,17 +47,20 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource {
             // retrieving data
             if let error = error {
                 print(error.localizedDescription)
+                self.networkErrorAlert()
             }
             else if let data = data {
-               let dataDictionnary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+                let dataDictionnary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
                 print(dataDictionnary)
                 
                 let movies = dataDictionnary["results"] as! [[String: Any]]
                 self.movies = movies
                 self.tableView.reloadData()
+                self.refreshControl.endRefreshing()
             }
         }
         task.resume()
+        activityIndicator.stopAnimating()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -59,20 +81,13 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> Int {
+        return 200000
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
