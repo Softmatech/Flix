@@ -45,7 +45,7 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource, UISearch
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.sizeToFit()
         tableView.tableHeaderView = searchController.searchBar
-        
+        self.title = "Movies"
         // Sets this view controller as presenting view controller for the search interface
         definesPresentationContext = true
         refreshControl.addTarget(self, action: #selector(NowPlayingViewController.didPullToRefresh(_:)), for: .valueChanged)
@@ -121,6 +121,14 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource, UISearch
         return cell
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let cell = sender as! UITableViewCell
+        if let indexpath = tableView.indexPath(for: cell) {
+            let movie = movies[indexpath.row]
+            let detailViewController = segue.destination as! DetailViewController
+            detailViewController.movie = movie
+        }
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
