@@ -113,7 +113,7 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource, UISearch
         let posterUrl = URL(string: baseUrlString + posterPathString)!
         
         data.append(title)
-        print("---------->>>>",data)
+//        print("---------->>>>",data)
         
         cell.posterImageView.af_setImage(withURL: posterUrl)
         cell.titleLabel.text = title
