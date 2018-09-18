@@ -9,42 +9,25 @@
 import UIKit
 import AlamofireImage
 
-class NowPlayingViewController: UIViewController,UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating{
-    
-    func updateSearchResults(for searchController: UISearchController) {
-//        if let searchText = searchController.searchBar.text {
-//            filteredData = searchText.isEmpty ? data : data.filter({(dataString: String) -> Bool in
-//                return dataString.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil
-//            })
-//
-//            tableView.reloadData()
-//        }
-    }
+class NowPlayingViewController: UIViewController,UITableViewDataSource {
     
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var searchBar: UISearchBar!
     
     let alertController = UIAlertController(title: "Network Error", message: "It's Seems there is a network error", preferredStyle: .alert)
     var movies: [[String: Any]] = []
     var refreshControl: UIRefreshControl!
     var data = [String]()
     var searchController: UISearchController!
-    var filteredData: [String]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.rowHeight = 150
-        searchBar.delegate = self
-        filteredData = data
         refreshControl = UIRefreshControl()
         searchController = UISearchController(searchResultsController: nil)
-        searchController.searchResultsUpdater = self
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchBar.sizeToFit()
-        tableView.tableHeaderView = searchController.searchBar
+
         self.title = "Movies"
         // Sets this view controller as presenting view controller for the search interface
         definesPresentationContext = true
@@ -52,14 +35,7 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource, UISearch
         tableView.insertSubview(refreshControl, at: 0)
         fetchMovies()
     }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredData = searchText.isEmpty ? data : data.filter { (item: String) -> Bool in
-            // If dataItem matches the searchText, return true to include it
-            return item.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
-        }
-        tableView.reloadData()
-    }
+
     
         func networkErrorAlert(){
             let alertController = UIAlertController(title: "Network Error", message: "It's Seems there is a network error. Please try again later.", preferredStyle: .alert)
@@ -72,7 +48,6 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource, UISearch
     }
 
     func fetchMovies() {
-        data.removeAll()
         activityIndicator.startAnimating()
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=f09a904547a3537c895babf5612886fa")!
         

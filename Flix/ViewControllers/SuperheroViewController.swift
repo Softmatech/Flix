@@ -8,16 +8,19 @@
 
 import UIKit
 
-class SuperheroViewController: UIViewController, UICollectionViewDataSource {
+class SuperheroViewController: UIViewController, UICollectionViewDataSource, UISearchBarDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var searchbar: UISearchBar!
     
     var movies: [[String: Any]] = []
-    
+    var filteredData: [[String: Any]]!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.title = "Super Hero"
+        searchbar.delegate = self
+        filteredData = movies
         collectionView.dataSource = self
         fetchMovies()
     }
@@ -28,17 +31,16 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movies.count
+        return filteredData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PosterCell", for: indexPath) as! PosterCell
-        let movie = movies[indexPath.item]
-            print("------------->",movie)
+        let movie = filteredData[indexPath.item]
             if let posterPathString = movie["poster_path"] as? String {
-                print("posterrrr-------------->> ",posterPathString)
             let baseUrlString = "https://image.tmdb.org/t/p/w500"
             let posterURLString = URL(string: baseUrlString + posterPathString)!
+            let title = movie["title"]
             cell.posterImageView.af_setImage(withURL: posterURLString)
         }
         return cell
@@ -61,11 +63,21 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource {
                 let dataDictionnary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
                 let movies = dataDictionnary["results"] as! [[String: Any]]
                 self.movies = movies
+                self.filteredData = movies
                 self.collectionView.reloadData()
 //                self.refreshControl.endRefreshing()
             }
         }
         task.resume()
+    }
+ 
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filteredData = searchText.isEmpty ? movies : movies.filter { (item: [String: Any]) -> Bool in
+            // If dataItem matches the searchText, return true to include it
+            let lt = item["title"] as! String
+            return lt.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
+        }
+        collectionView.reloadData()
     }
     
 }
