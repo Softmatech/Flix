@@ -40,7 +40,7 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIS
             if let posterPathString = movie["poster_path"] as? String {
             let baseUrlString = "https://image.tmdb.org/t/p/w500"
             let posterURLString = URL(string: baseUrlString + posterPathString)!
-            let title = movie["title"]
+//            let title = movie["title"]
             cell.posterImageView.af_setImage(withURL: posterURLString)
         }
         return cell
@@ -57,7 +57,7 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIS
             // retrieving data
             if let error = error {
                 print(error.localizedDescription)
-//                self.networkErrorAlert()
+                self.networkErrorAlert()
             }
             else if let data = data {
                 let dataDictionnary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
@@ -80,4 +80,9 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIS
         collectionView.reloadData()
     }
     
+    func networkErrorAlert(){
+        let alertController = UIAlertController(title: "Network Error", message: "It's Seems there is a network error. Please try again later.", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.default, handler: { (action) in self.fetchMovies()}))
+        self.present(alertController, animated: true)
+    }
 }

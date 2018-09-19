@@ -15,11 +15,13 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    let alertController = UIAlertController(title: "Network Error", message: "It's Seems there is a network error", preferredStyle: .alert)
+//    let alertController = UIAlertController(title: "Network Error", message: "It's Seems there is a network error", preferredStyle: .alert)
     var movies: [[String: Any]] = []
     var refreshControl: UIRefreshControl!
     var data = [String]()
     var searchController: UISearchController!
+    let url = URL(string: "Flix/Flix/Assets.xcassets/launch_image.imageset/launch_image.png")!
+    let placeholderImage = UIImage(named: "placeholder")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,13 +88,16 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource {
         let posterPathString = movie["poster_path"] as! String
         let baseUrlString = "https://image.tmdb.org/t/p/w500"
         let posterUrl = URL(string: baseUrlString + posterPathString)!
+        print("urlll----->>>> ",posterPathString)
         
-        data.append(title)
-//        print("---------->>>>",data)
         
-        cell.posterImageView.af_setImage(withURL: posterUrl)
+        cell.posterImageView.af_setImage(withURL: posterUrl,placeholderImage: placeholderImage,imageTransition: .crossDissolve(0.5))
         cell.titleLabel.text = title
         cell.overviewlabel.text = overview
+        cell.selectionStyle = .gray
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor.lightGray
+        cell.selectedBackgroundView = backgroundView
         return cell
     }
 
@@ -109,5 +114,7 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
 
 }
