@@ -15,6 +15,7 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIS
     
     var movies: [[String: Any]] = []
     var filteredData: [[String: Any]]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.

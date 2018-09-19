@@ -86,12 +86,24 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource {
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
         let posterPathString = movie["poster_path"] as! String
-        let baseUrlString = "https://image.tmdb.org/t/p/w500"
-        let posterUrl = URL(string: baseUrlString + posterPathString)!
-        print("urlll----->>>> ",posterPathString)
+//        let baseUrlString = "https://image.tmdb.org/t/p/w500"
+        //...........................................................................................................
+        let smallImageRequest = URL(string: "https://image.tmdb.org/t/p/w45" + posterPathString)!
+        let largeImageRequest = URL(string: "https://image.tmdb.org/t/p/original" + posterPathString)!
         
+        print("--------------",smallImageRequest,"**************************",largeImageRequest)
         
-        cell.posterImageView.af_setImage(withURL: posterUrl,placeholderImage: placeholderImage,imageTransition: .crossDissolve(0.5))
+        cell.posterImageView.af_setImage(withURL: smallImageRequest,placeholderImage: placeholderImage,imageTransition: .crossDissolve(0.5))
+        success: do {
+            cell.posterImageView.af_setImage(withURL: smallImageRequest)
+        }
+        cell.posterImageView.af_setImage(withURL: largeImageRequest,placeholderImage: placeholderImage,imageTransition: .crossDissolve(0.5))
+        success: do {
+            cell.posterImageView.af_setImage(withURL: largeImageRequest)
+        }
+
+//        let posterUrl = URL(string: baseUrlString + posterPathString)!
+        
         cell.titleLabel.text = title
         cell.overviewlabel.text = overview
         cell.selectionStyle = .gray
@@ -114,7 +126,4 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-
 }
