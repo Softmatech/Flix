@@ -67,20 +67,23 @@ class DetailViewController: UIViewController,UIGestureRecognizerDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        getMoviesKey(movie_id: movie_id)
+        let key = getMoviesKey(movie_id: movie_id)
+        let video = segue.destination as! videoViewController
+        video.key = key
     }
     
-    func getMoviesKey(movie_id: NSNumber) -> Int {
-        var key = 0
+    func getMoviesKey(movie_id: NSNumber) -> String {
+        var key = ""
         let url = URL(string: "https://api.themoviedb.org/3/movie/\(movie_id)/videos?api_key=f09a904547a3537c895babf5612886fa&language=en-US")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
         let task = session.dataTask(with: request) { (data, response, error) in
             if let data = data {
                 let dataDictionnary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-                print("############",dataDictionnary)
-                let movie = dataDictionnary["results"] as! String
-//                key = movie["key"]as ? Int
+//                print("############",dataDictionnary)
+                let movie = dataDictionnary["results"] as! [[String: Any]]
+                let mov = movie[0]
+                key = mov["key"]as! String
 //                print("keyyyy -----> ",key)
             }
         }
