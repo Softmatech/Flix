@@ -23,9 +23,20 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIS
         searchbar.delegate = self
         filteredData = movies
         collectionView.dataSource = self
+        //.....................................................cellSet
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.minimumInteritemSpacing = 5
+        layout.minimumLineSpacing = layout.minimumInteritemSpacing
+        let cellsPerLine: CGFloat = 2
+        let interItemSpacingTotal = layout.minimumInteritemSpacing * (cellsPerLine - 1)
+        let width = collectionView.frame.size.width / cellsPerLine - interItemSpacingTotal / cellsPerLine
+        layout.itemSize = CGSize(width: width, height: width * 3 / 2)
+        //.....................................................................
+
         fetchMovies()
     }
-
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -63,6 +74,7 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIS
             else if let data = data {
                 let dataDictionnary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
                 let movies = dataDictionnary["results"] as! [[String: Any]]
+//                print("================",movies)
                 self.movies = movies
                 self.filteredData = movies
                 self.collectionView.reloadData()
@@ -71,7 +83,7 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIS
         }
         task.resume()
     }
- 
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filteredData = searchText.isEmpty ? movies : movies.filter { (item: [String: Any]) -> Bool in
             // If dataItem matches the searchText, return true to include it
@@ -85,5 +97,15 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIS
         let alertController = UIAlertController(title: "Network Error", message: "It's Seems there is a network error. Please try again later.", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.default, handler: { (action) in self.fetchMovies()}))
         self.present(alertController, animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        print("********************************************************************************")
+        let cell = sender as! UICollectionViewCell
+        if let indexpath = collectionView.indexPath(for: cell) {
+            let movie = filteredData[indexpath.item]
+            let detailViewController = segue.destination as! DetailViewController
+            detailViewController.movie = movie
+        }
     }
 }

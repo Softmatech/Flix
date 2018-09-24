@@ -15,13 +15,14 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-//    let alertController = UIAlertController(title: "Network Error", message: "It's Seems there is a network error", preferredStyle: .alert)
     var movies: [[String: Any]] = []
     var refreshControl: UIRefreshControl!
     var data = [String]()
     var searchController: UISearchController!
-    let url = URL(string: "Flix/Flix/Assets.xcassets/launch_image.imageset/launch_image.png")!
-    let placeholderImage = UIImage(named: "placeholder")
+//    let image = UIImageView(frame: frame)
+    
+    let placeholderURL = URL(string: "Flix/Assets.xcassets/launch_image.imageset/launch_image.png")!
+    let placeholderImages = UIImage(named: "placeholder")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +30,7 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource {
         tableView.rowHeight = 150
         refreshControl = UIRefreshControl()
         searchController = UISearchController(searchResultsController: nil)
-
+//        print("=================================",placeholderURL)
         self.title = "Movies"
         // Sets this view controller as presenting view controller for the search interface
         definesPresentationContext = true
@@ -38,7 +39,6 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource {
         fetchMovies()
     }
 
-    
         func networkErrorAlert(){
             let alertController = UIAlertController(title: "Network Error", message: "It's Seems there is a network error. Please try again later.", preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.default, handler: { (action) in self.fetchMovies()}))
@@ -52,7 +52,7 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource {
     func fetchMovies() {
         activityIndicator.startAnimating()
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=f09a904547a3537c895babf5612886fa")!
-        
+        //https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=<<api_key>>&language=en-US
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
@@ -82,24 +82,24 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
+//        cell.posterImageView.af_setImage(withURL: placeholderURL,placeholderImage: placeholderImages)
         let movie = movies[indexPath.row]
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
         let posterPathString = movie["poster_path"] as! String
+        
 //        let baseUrlString = "https://image.tmdb.org/t/p/w500"
-        //...........................................................................................................
+        
         let smallImageRequest = URL(string: "https://image.tmdb.org/t/p/w45" + posterPathString)!
         let largeImageRequest = URL(string: "https://image.tmdb.org/t/p/original" + posterPathString)!
-        
-        print("--------------",smallImageRequest,"**************************",largeImageRequest)
-        
-        cell.posterImageView.af_setImage(withURL: smallImageRequest,placeholderImage: placeholderImage,imageTransition: .crossDissolve(0.5))
+
+        cell.posterImageView.af_setImage(withURL: smallImageRequest,placeholderImage: placeholderImages,imageTransition: .crossDissolve(0.5))
         success: do {
-            cell.posterImageView.af_setImage(withURL: smallImageRequest)
+            cell.posterImageView.af_setImage(withURL: smallImageRequest,placeholderImage: placeholderImages,imageTransition: .crossDissolve(0.5))
         }
-        cell.posterImageView.af_setImage(withURL: largeImageRequest,placeholderImage: placeholderImage,imageTransition: .crossDissolve(0.5))
+        cell.posterImageView.af_setImage(withURL: largeImageRequest,placeholderImage: placeholderImages,imageTransition: .crossDissolve(0.5))
         success: do {
-            cell.posterImageView.af_setImage(withURL: largeImageRequest)
+            cell.posterImageView.af_setImage(withURL: largeImageRequest,placeholderImage: placeholderImages,imageTransition: .crossDissolve(0.5))
         }
 
 //        let posterUrl = URL(string: baseUrlString + posterPathString)!
