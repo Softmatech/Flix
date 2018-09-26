@@ -25,6 +25,8 @@ class DetailViewController: UIViewController,UIGestureRecognizerDelegate {
     var movies: [[String: Any]] = []
     var movie: [String:Any]?
     var movie_id: NSNumber = 0
+    var key = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if let movie = movie {
@@ -53,8 +55,6 @@ class DetailViewController: UIViewController,UIGestureRecognizerDelegate {
         // Attach it to a view of your choice. If it's a UIImageView, remember to enable user interaction
         posterImageView.isUserInteractionEnabled = true
         posterImageView.addGestureRecognizer(tapGestureRecognizer)
-        
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,31 +63,33 @@ class DetailViewController: UIViewController,UIGestureRecognizerDelegate {
     }
 
     @IBAction func didTap(_ sender: UITapGestureRecognizer) {
-//        print("&&&&&&&&&&&&&&&&&&&&")
     }
     
+    override func performSegue(withIdentifier identifier: String, sender: Any?) {
+        print("$$$$$$$$$$$$$$$$$$")
+    }
+
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let key = getMoviesKey(movie_id: movie_id)
-        let video = segue.destination as! videoViewController
-        video.key = key
-    }
-    
-    func getMoviesKey(movie_id: NSNumber) -> String {
-        var key = ""
+        var uRL = ""
         let url = URL(string: "https://api.themoviedb.org/3/movie/\(movie_id)/videos?api_key=f09a904547a3537c895babf5612886fa&language=en-US")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
         let task = session.dataTask(with: request) { (data, response, error) in
             if let data = data {
                 let dataDictionnary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-//                print("############",dataDictionnary)
                 let movie = dataDictionnary["results"] as! [[String: Any]]
+                if movie != nil{
                 let mov = movie[0]
-                key = mov["key"]as! String
-//                print("keyyyy -----> ",key)
+                let key = mov["key"]as! String
+                uRL = "https://www.youtube.com/watch?v=\(key)"
+                print("************************-> ",uRL)
+                let video = segue.destination as! videoViewController
+                video.videoURL = uRL
+                }
             }
         }
         task.resume()
-        return key
     }
+
 }

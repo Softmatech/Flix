@@ -11,28 +11,17 @@ import UIKit
 class videoViewController: UIViewController {
 
     @IBOutlet weak var videoViewController: UIWebView!
-    var key = ""
+    var videoURL = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-    
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        if !key.isEmpty {
-            let url = "https://www.youtube.com/watch?v=\(key)"
-            print("+++++++++++++++++",url)
-        }
+        print("------------------->>> ",videoURL)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
+    
 }

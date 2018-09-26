@@ -138,7 +138,7 @@
                 <tapGestureRecognizer id="laf-1k-eKi">
                     <connections>
                         <action selector="didTap:" destination="k7W-eL-Msl" id="Pfy-Z6-VXv"/>
-                        <segue destination="HLU-Ff-lpR" kind="presentation" id="LUv-vk-HiE"/>
+                        <segue destination="HLU-Ff-lpR" kind="show" id="4Oq-ur-tR8"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -297,6 +297,6 @@
         <image name="superhero_tabbar_item" width="21" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="1f2-xl-fJG"/>
+        <segue reference="1QI-f6-yN7"/>
     </inferredMetricsTieBreakers>
 </document>

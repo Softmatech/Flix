@@ -60,11 +60,8 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIS
     
     func fetchMovies() {
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=f09a904547a3537c895babf5612886fa")!
-        
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
-        
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
-        
         let task = session.dataTask(with: request) { (data, response, error) in
             // retrieving data
             if let error = error {
