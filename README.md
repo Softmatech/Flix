@@ -8,19 +8,19 @@ Time spent: **20** hours spent in total
 
 The following **required** user stories are complete:
 
-- [yes ] User sees app icon in home screen and styled launch screen (+1pt)
-- [yes ] User can scroll through a list of movies currently playing in theaters from The Movie DB API (+5pt)
-- [ yes] User can "Pull to refresh" the movie list (+2pt)
-- [yes ] User sees a loading state while waiting for the movies to load (+2pt)
+- [X] User sees app icon in home screen and styled launch screen (+1pt)
+- [X] User can scroll through a list of movies currently playing in theaters from The Movie DB API (+5pt)
+- [X] User can "Pull to refresh" the movie list (+2pt)
+- [X] User sees a loading state while waiting for the movies to load (+2pt)
 
 The following **stretch** user stories are implemented:
 
-- [yes ] User sees an alert when there's a networking error (+1pt)
-- [ yes] User can search for a movie (+3pt)
-- [yes ] While poster is being fetched, user see's a placeholder image (+1pt)
-- [yes ] User sees image transition for images coming from network, not when it is loaded from cache (+1pt)
-- [ yes] Customize the selection effect of the cell (+1pt)
-- [ yes] For the large poster, load the low resolution image first and then switch to the high resolution image when complete (+2pt)
+- [X] User sees an alert when there's a networking error (+1pt)
+- [X] User can search for a movie (+3pt)
+- [X] While poster is being fetched, user see's a placeholder image (+1pt)
+- [X] User sees image transition for images coming from network, not when it is loaded from cache (+1pt)
+- [X] Customize the selection effect of the cell (+1pt)
+- [X] For the large poster, load the low resolution image first and then switch to the high resolution image when complete (+2pt)
 
 The following **additional** user stories are implemented:
 

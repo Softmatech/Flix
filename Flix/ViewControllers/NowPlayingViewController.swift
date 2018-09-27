@@ -27,6 +27,9 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
+//        tableView.rowHeight = UITableViewAutomaticDimension
+//        tableView.estimatedRowHeight = 50
+
         tableView.rowHeight = 150
         refreshControl = UIRefreshControl()
         searchController = UISearchController(searchResultsController: nil)
