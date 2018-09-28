@@ -18,6 +18,7 @@
 		E6B4B4A421516D9000775A55 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B4B4A321516D9000775A55 /* DetailViewController.swift */; };
 		E6B4B4A62151813200775A55 /* PosterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B4B4A52151813200775A55 /* PosterCell.swift */; };
 		E6B4B4A8215181C500775A55 /* SuperheroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B4B4A7215181C500775A55 /* SuperheroViewController.swift */; };
+		E6CCC048215E862500C3409B /* InfiniteScrollActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CCC047215E862500C3409B /* InfiniteScrollActivityView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		E6B4B4A321516D9000775A55 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		E6B4B4A52151813200775A55 /* PosterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterCell.swift; sourceTree = "<group>"; };
 		E6B4B4A7215181C500775A55 /* SuperheroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperheroViewController.swift; sourceTree = "<group>"; };
+		E6CCC047215E862500C3409B /* InfiniteScrollActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfiniteScrollActivityView.swift; sourceTree = "<group>"; };
 		FE03933C622453D073C4B841 /* Pods-Flix.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flix.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flix/Pods-Flix.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,6 +117,7 @@
 				E6B4B4A321516D9000775A55 /* DetailViewController.swift */,
 				E6B4B4A7215181C500775A55 /* SuperheroViewController.swift */,
 				E655ED712159A103009DCEF9 /* videoViewController.swift */,
+				E6CCC047215E862500C3409B /* InfiniteScrollActivityView.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6CCC048215E862500C3409B /* InfiniteScrollActivityView.swift in Sources */,
 				E65A666A21500862006DB98F /* NowPlayingViewController.swift in Sources */,
 				E655ED722159A103009DCEF9 /* videoViewController.swift in Sources */,
 				E6B4B4A62151813200775A55 /* PosterCell.swift in Sources */,
