@@ -19,6 +19,7 @@ class MovieCell: UITableViewCell {
         // Initialization code
         self.layoutMargins = UIEdgeInsets.zero
         self.preservesSuperviewLayoutMargins = false
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
