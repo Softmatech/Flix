@@ -63,6 +63,7 @@ class DetailViewController: UIViewController,UIGestureRecognizerDelegate {
     }
 
     @IBAction func didTap(_ sender: UITapGestureRecognizer) {
+        print("okokokok")
     }
     
     override func performSegue(withIdentifier identifier: String, sender: Any?) {
@@ -71,25 +72,9 @@ class DetailViewController: UIViewController,UIGestureRecognizerDelegate {
 
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        var uRL = ""
-        let url = URL(string: "https://api.themoviedb.org/3/movie/\(movie_id)/videos?api_key=f09a904547a3537c895babf5612886fa&language=en-US")!
-        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
-        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
-        let task = session.dataTask(with: request) { (data, response, error) in
-            if let data = data {
-                let dataDictionnary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-                let movie = dataDictionnary["results"] as! [[String: Any]]
-                if movie != nil{
-                let mov = movie[0]
-                let key = mov["key"]as! String
-                uRL = "https://www.youtube.com/watch?v=\(key)"
-                print("************************-> ",uRL)
-                let video = segue.destination as! videoViewController
-                video.videoURL = uRL
-                }
-            }
-        }
-        task.resume()
+        let video = segue.destination as! videoViewController
+        video.movie_id = Int(movie_id)
+        
     }
 
 }
