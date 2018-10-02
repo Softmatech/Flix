@@ -16,10 +16,9 @@ class videoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Go Back", style: .plain, target: nil, action: nil)
         // Do any additional setup after loading the view.
 //        print("------------------->>> ",videoURL)
-
-        
         var uRL = ""
         let url = URL(string: "https://api.themoviedb.org/3/movie/\(movie_id)/videos?api_key=f09a904547a3537c895babf5612886fa&language=en-US")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
@@ -40,8 +39,6 @@ class videoViewController: UIViewController {
             }
         }
         task.resume()
-        
-        
     }
  
 }
