@@ -97,8 +97,9 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIS
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        print("********************************************************************************")
+
         let cell = sender as! UICollectionViewCell
+        print("cell--->> ",cell)
         if let indexpath = collectionView.indexPath(for: cell) {
             let movie = filteredData[indexpath.item]
             let detailViewController = segue.destination as! DetailViewController

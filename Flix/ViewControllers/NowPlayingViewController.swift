@@ -128,7 +128,6 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource,UIScrollV
             }
             else if let data = data {
                 let dataDictionnary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-                
                 let movies = dataDictionnary["results"] as! [[String: Any]]
                 self.movies = movies
                 self.tableView.reloadData()
@@ -145,7 +144,7 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource,UIScrollV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
-//        cell.posterImageView.af_setImage(withURL: placeholderURL,placeholderImage: placeholderImages)
+
         let movie = movies[indexPath.row]
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
@@ -189,4 +188,6 @@ class NowPlayingViewController: UIViewController,UITableViewDataSource,UIScrollV
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
 }

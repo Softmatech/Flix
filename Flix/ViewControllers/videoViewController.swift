@@ -40,5 +40,10 @@ class videoViewController: UIViewController {
         }
         task.resume()
     }
- 
+    
+    
+    @IBAction func BakcButtonAction(_ sender: Any) {
+        performSegue(withIdentifier: "detailSegue2", sender: nil)
+    }
+    
 }
